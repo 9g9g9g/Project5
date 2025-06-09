@@ -84,9 +84,20 @@ int main(void)
 
 		Sleep(500);
 
-		
-
+		printf("6-%d: 주사위 눈이 %d이하이면 그냥 기분이 나빠집니다.\n", intimacy_level, 6 - intimacy_level);
+		dice = rollDice();
+		if (dice < 6 - intimacy_level) {
+			printf("%s의 기분이 나빠집니다.: %d->", cat, cat_mood);
+			if (cat_mood != 0) {
+				cat_mood -= 1;
+				printf("%d", cat_mood);
+			}
+			else {
+				printf("%d", cat_mood);
+			}
+		}
 		//기분 나빠짐
+		Sleep(500);
 
 		printf("%s 이동: 집사와 친밀할수록 냄비 쪽으로 갈 확률이 높아집니다.\n주사위 눈이 %d 이상이면 냄비 쪽으로 이동합니다.\n", cat, 6 - intimacy_level);
 		dice = rollDice();
