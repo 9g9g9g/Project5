@@ -21,7 +21,7 @@ void drawRoom(int catpos) {
 
 	printf("#\n");
 	printf("######\n\n");
-}
+}//방 그리기
 
 
 
@@ -30,7 +30,8 @@ void drawRoom(int catpos) {
 int main(void)
 {
 
-	int soup_quantity = 0, intimacy_level = 2, pat, dice, catpos = 1;//soup_quantity:수프의 개수, intimacy_level:집사와의 관계, pat:0 or 1, dice:주사위 눈 catpos:고양이 위치
+	int soup_quantity = 0, intimacy_level = 2, pat, dice, catpos = 1;//soup_quantity:수프의 개수, intimacy_level:집사와의 관계, pat:쓰다듬기 0 or 1, dice:주사위 눈 catpos:고양이 위치
+	int CP = 0, cat_mood = 3; //CP:상점 자원, cat_mood:고양이 기분
 	char cat[100];//고양이 이름
 	srand((unsigned int)time(NULL));
 	printf("****야옹이와 수프****\n\n");
@@ -62,6 +63,8 @@ int main(void)
 		printf("==================================================\n\n");//상태
 
 		Sleep(500);
+
+		//기분 나빠짐
 
 		printf("%s 이동: 집사와 친밀할수록 냄비 쪽으로 갈 확률이 높아집니다.\n주사위 눈이 %d 이상이면 냄비 쪽으로 이동합니다.\n", cat, 6 - intimacy_level);
 		dice = rand() % 6 + 1;
@@ -98,7 +101,7 @@ int main(void)
 		Sleep(500);
 
 		drawRoom(catpos);
-		// 뱡만들기
+		// 방 그리기
 
 		Sleep(500);
 
@@ -152,6 +155,10 @@ int main(void)
 			}
 		}
 		//상호작용 1 누를떄
+
+		//CP 생산
+
+		//상점 구매
 
 		Sleep(2500);
 		system("cls");//지우고 상태부터 다시
