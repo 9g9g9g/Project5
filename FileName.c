@@ -290,7 +290,7 @@ int main(void)
 		if (cat_mood - 1 + intimacy_level > 0) {
 			CP += cat_mood - 1 + intimacy_level;
 		}
-		printf("%s의 기분(0~3): %d\n집사와의 친밀도(0~4): %d\n%s의 기분과 친밀도에 따라서 CP가 ", cat, cat_mood, intimacy_level);
+		printf("%s의 기분(0~3): %d\n집사와의 친밀도(0~4): %d\n%s의 기분과 친밀도에 따라서 CP가 ", cat, cat_mood, intimacy_level, cat);
 		if (cat_mood - 1 + intimacy_level >= 0) {
 			printf("%d", cat_mood - 1 + intimacy_level);
 		}
