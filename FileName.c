@@ -113,7 +113,7 @@ int main(void)
 			printf("%s은(는) 기분 좋게 식빵을 굽고 있습니다.", cat);
 		case 3:
 			printf("%s은(는) 골골송을 부르며 수프를 만들러 갑니다.", cat);
-			if (catpos < 4) {
+			if (catpos < 13) {
 				catpos++;
 			}
 		}
