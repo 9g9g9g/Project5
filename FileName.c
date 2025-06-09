@@ -86,7 +86,7 @@ int main(void)
 
 	int soup_quantity = 0, intimacy_level = 2, user_choice, dice, catpos = 1, before=0;//soup_quantity:수프의 개수, intimacy_level:집사와의 관계, user_choice:상호작용, dice:주사위 눈, catpos:고양이 위치, before: 고양이 전 위치
 	int CP = 0, cat_mood = 3, scratcherpos = 0, cat_towerpos = 0; //CP:상점 자원, cat_mood:고양이 기분, scratcherpos:스크래쳐 유무와 위치, cat_towerpos:캣타워 유무와 위치
-	int rat = 0, razer = 0;//rat:장남감 쥐 유무, rezer:레이저 포인트 유무
+	int rat = 0, razer = 0, store=0;//rat:장남감 쥐 유무, rezer:레이저 포인트 유무, store:상점에서 고른 숫자
 	srand((unsigned int)time(NULL));
 	printf("****야옹이와 수프****\n\n");
 	printf("      /\\_/\\\n /\\  / ° ° \\\n//\\\\ \\~(*)~/\n`  \\/   ^ /\n   | \\|| ||\n   \\ '|| ||\n    \\)()-())\n\n");
@@ -300,7 +300,81 @@ int main(void)
 		printf("포인트 생산되었습니다.");
 		//CP 생산
 
+
+		printf("상점에서 물건을 구매할 수 있습니다.\n어떤 물건을 구매할까요?\n  0. 아무것도 사지 않는다.\n");
+		printf("  1. 장난감 쥐: 1CP "); if (rat == 1)printf("(품절)");
+		printf("\n  2. 레이저 포인터: 2CP "); if (razer == 1)printf("(품절)");
+		printf("\n  3. 스크래처: 3CP "); if (scratcherpos != 0)printf("(품절)");
+		printf("\n  4. 캣타워: 6CP "); if (cat_towerpos != 0)printf("(품절)");
+		printf("\n");
+		while (1) {
+			scanf_s("%d", &store);
+			if (store >= 0 && store <= 4) {
+				switch (store) {
+				case 0:
+					printf("아무것도 사지 않는다.\n"); break;
+				case 1:
+					if (rat == 0 && CP >= 1) {
+						rat = 1;
+						printf("장난감 쥐를 구매했습니다, 보유 CP %d 포인트\n", CP);
+					}
+					else if (rat == 0 && CP < 1) {
+						printf("CP가 부족합니다.\n");
+					}
+					else if (rat == 1) {
+						printf("장난감 쥐를 이미 구매했습니다.");
+					}break;
+				case 2:
+					if (razer == 0 && CP >= 2) {
+						razer = 1;
+						printf("레이저 포인터를 구매했습니다, 보유 CP %d 포인트\n", CP);
+					}
+					else if (razer == 0 && CP < 2) {
+						printf("CP가 부족합니다.\n");
+					}
+					else if (razer == 1) {
+						printf("레이저 포인터를 이미 구매했습니다.");
+					}break;
+				case 3:
+					if (scratcherpos == 0 && CP >= 4) {
+						while (1) {
+							scratcherpos = rand() % 11 + 2;
+							if (scratcherpos != cat_towerpos) {
+								break;
+							}
+						}
+						printf("스크래처를 구매했습니다, 보유 CP %d 포인트\n", CP);
+					}
+					else if (scratcherpos == 0 && CP < 4) {
+						printf("CP가 부족합니다.\n");
+					}
+					else if (scratcherpos!=0) {
+						printf("스크래처를 이미 구매했습니다.");
+					}break;
+				case 4:
+					if (cat_towerpos == 0 && CP >= 6) {
+						while (1) {
+							cat_towerpos = rand() % 11 + 2;
+							if (cat_towerpos != scratcherpos) {
+								break;
+							}
+						}
+						printf("캣타워를 구매했습니다, 보유 CP %d 포인트\n", CP);
+					}
+					else if (cat_towerpos == 0 && CP < 4) {
+						printf("CP가 부족합니다.\n");
+					}
+					else if (cat_towerpos != 0) {
+						printf("캣타워를 이미 구매했습니다.");
+					}break;
+				}
+				break;
+			}
+		}
 		//상점 구매
+
+
+
 
 		Sleep(2500);
 		system("cls");//지우고 상태부터 다시
