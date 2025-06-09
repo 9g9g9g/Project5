@@ -1,135 +1,191 @@
-#include<stdio.h>
+ï»¿#include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
 #include<Windows.h>
 
-//»óÅÂÃâ·Â?*±âºĞ³ªºüÁü-ÀÌµ¿& Çàµ¿?¹æ±×¸®±â?»óÈ£ÀÛ¿ë¹×°á°ú?*CP »ı»ê?*»óÁ¡±¸¸Å
+//ìƒíƒœì¶œë ¥â€“*ê¸°ë¶„ë‚˜ë¹ ì§-ì´ë™& í–‰ë™â€“ë°©ê·¸ë¦¬ê¸°â€“ìƒí˜¸ì‘ìš©ë°ê²°ê³¼â€“*CP ìƒì‚°â€“*ìƒì êµ¬ë§¤
 
-void drawRoom(int);
+void drawRoom(int, int);
 int rollDice(void);
+int moodplus1(int, char);
+int moodplus2(int, char);
+int moodminus1(int, char);
 
-void drawRoom(int catpos) {
+void drawRoom(int catpos, int before) {
 	printf("###############\n");
 	printf("#H           B#\n");
 	printf("#");
 
 	for (int i = 1; i <= 13; i++) {
 		if (i == catpos) {
-			printf("C"); // °í¾çÀÌ À§Ä¡ Ãâ·Â
+			printf("C"); // ê³ ì–‘ì´ ìœ„ì¹˜ ì¶œë ¥
+		}
+		else if (i == before) {
+			printf(".");
 		}
 		else {
-			printf(" "); // ºó °ø°£ Ãâ·Â
+			printf(" "); // ë¹ˆ ê³µê°„ ì¶œë ¥
 		}
 	}
 
 	printf("#\n");
 	printf("###############\n\n");
-}//¹æ ±×¸®±â
+}//ë°© ê·¸ë¦¬ê¸°
 
 int rollDice() {
 	int dice; 
 	dice = rand() % 6 + 1;
-	printf("ÁÖ»çÀ§¸¦ ±¼¸³´Ï´Ù. ¶Ç¸£¸¤...\n");
-	printf("%d°¡ ³ª¿Ô½À´Ï´Ù!\n", dice);
+	printf("ì£¼ì‚¬ìœ„ë¥¼ êµ´ë¦½ë‹ˆë‹¤. ë˜ë¥´ë¥µ...\n");
+	printf("%dê°€ ë‚˜ì™”ìŠµë‹ˆë‹¤!\n", dice);
 	return dice;
-}//ÁÖ»çÀ§ ±¼¸®±â
+}//ì£¼ì‚¬ìœ„ êµ´ë¦¬ê¸°
+
+int moodplus1(int cat_mood, char cat) {
+	
+	printf("%sì˜ ê¸°ë¶„ì´ ì¡°ê¸ˆ ì¢‹ì•„ì¡ŒìŠµë‹ˆë‹¤:%d->", cat, cat_mood);
+	if (cat_mood < 3) {
+		cat_mood++;
+	}
+	printf("%d\n", cat_mood);
+}//ê¸°ë¶„ +1
+
+
+int moodplus2(int cat_mood, char cat) {
+
+	printf("%sì˜ ê¸°ë¶„ì´ ì œë²• ì¢‹ì•„ì¡ŒìŠµë‹ˆë‹¤:%d->", cat, cat_mood);
+	if (cat_mood < 2) {
+		cat_mood += 2;
+	}
+	else if (cat_mood = 2) {
+		cat_mood++;
+	}
+	printf("%d\n", cat_mood);
+}//ê¸°ë¶„ +2
+
+int moodminus1(int cat_mood, char cat) {
+	printf("%sì˜ ê¸°ë¶„ì´ ë‚˜ë¹ ì§‘ë‹ˆë‹¤.: %d->", cat, cat_mood);
+	if (cat_mood != 0) {
+		cat_mood -= 1;	
+	}
+	printf("%d\n", cat_mood);
+}
+
+
+
+
 
 
 
 int main(void)
 {
 
-	int soup_quantity = 0, intimacy_level = 2, pat, dice, catpos = 1;//soup_quantity:¼öÇÁÀÇ °³¼ö, intimacy_level:Áı»ç¿ÍÀÇ °ü°è, pat:¾²´Ùµë±â 0 or 1, dice:ÁÖ»çÀ§ ´«, catpos:°í¾çÀÌ À§Ä¡
-	int CP = 0, cat_mood = 3; //CP:»óÁ¡ ÀÚ¿ø, cat_mood:°í¾çÀÌ ±âºĞ
-	char cat[100];//°í¾çÀÌ ÀÌ¸§
+	int soup_quantity = 0, intimacy_level = 2, pat, dice, catpos = 1, before;//soup_quantity:ìˆ˜í”„ì˜ ê°œìˆ˜, intimacy_level:ì§‘ì‚¬ì™€ì˜ ê´€ê³„, pat:ì“°ë‹¤ë“¬ê¸° 0 or 1, dice:ì£¼ì‚¬ìœ„ ëˆˆ, catpos:ê³ ì–‘ì´ ìœ„ì¹˜, before: ê³ ì–‘ì´ ì „ ìœ„ì¹˜
+	int CP = 0, cat_mood = 3, scratcherpos = 0, cat_towerpos = 0; //CP:ìƒì  ìì›, cat_mood:ê³ ì–‘ì´ ê¸°ë¶„, scratcherpos:ìŠ¤í¬ë˜ì³ ìœ ë¬´ì™€ ìœ„ì¹˜, cat_towerpos:ìº£íƒ€ì›Œ ìœ ë¬´ì™€ ìœ„ì¹˜
+	char cat[100];//ê³ ì–‘ì´ ì´ë¦„
 	srand((unsigned int)time(NULL));
-	printf("****¾ß¿ËÀÌ¿Í ¼öÇÁ****\n\n");
-	printf("      /\\_/\\\n /\\  / ¡Æ ¡Æ \\\n//\\\\ \\~(*)~/\n`  \\/   ^ /\n   | \\|| ||\n   \\ '|| ||\n    \\)()-())\n\n");
-	printf("¾ß¿ËÀÌÀÇ ÀÌ¸§À» Áö¾î ÁÖ¼¼¿ä: ");
+	printf("****ì•¼ì˜¹ì´ì™€ ìˆ˜í”„****\n\n");
+	printf("      /\\_/\\\n /\\  / Â° Â° \\\n//\\\\ \\~(*)~/\n`  \\/   ^ /\n   | \\|| ||\n   \\ '|| ||\n    \\)()-())\n\n");
+	printf("ì•¼ì˜¹ì´ì˜ ì´ë¦„ì„ ì§€ì–´ ì£¼ì„¸ìš”: ");
 	gets_s(cat, sizeof(cat));
-	printf("¾ß¿ËÀÌÀÇ ÀÌ¸§Àº %sÀÔ´Ï´Ù.\n", cat);
+	printf("ì•¼ì˜¹ì´ì˜ ì´ë¦„ì€ %sì…ë‹ˆë‹¤.\n", cat);
 	Sleep(1000);
-	system("cls");//¿ÀÇÁ´×
+	system("cls");//ì˜¤í”„ë‹
 
 	Sleep(500);
 
 	while (1) {
-		printf("==================== ÇöÀç»óÅÂ ====================\n");
-		printf("ÇöÀç±îÁö ¸¸µç ¼öÇÁ: %d°³\n", soup_quantity);
-		printf("CP: %d Æ÷ÀÎÆ®\n", CP);
-		printf("%s ±âºĞ(0~3): %d\n  ", cat, cat_mood);
+		printf("==================== í˜„ì¬ìƒíƒœ ====================\n");
+		printf("í˜„ì¬ê¹Œì§€ ë§Œë“  ìˆ˜í”„: %dê°œ\n", soup_quantity);
+		printf("CP: %d í¬ì¸íŠ¸\n", CP);
+		printf("%s ê¸°ë¶„(0~3): %d\n  ", cat, cat_mood);
 		switch (cat_mood) {
 		case 0:
-			printf("±âºĞÀÌ ¸Å¿ì ³ª»Ş´Ï´Ù.\n");
+			printf("ê¸°ë¶„ì´ ë§¤ìš° ë‚˜ì©ë‹ˆë‹¤.\n"); break;
 		case 1:
-			printf("½É½ÉÇØ ÇÕ´Ï´Ù\n");
+			printf("ì‹¬ì‹¬í•´ í•©ë‹ˆë‹¤\n"); break;
 		case 2: 
-			printf("½Ä»§À» ±Á½À´Ï´Ù.\n");
+			printf("ì‹ë¹µì„ êµ½ìŠµë‹ˆë‹¤.\n"); break;
 		case 3:
-			printf("°ñ°ñ¼ÛÀ» ºÎ¸¨´Ï´Ù.\n");
+			printf("ê³¨ê³¨ì†¡ì„ ë¶€ë¦…ë‹ˆë‹¤.\n"); break;
 		}
 
-		printf("Áı»ç¿ÍÀÇ °ü°è(0~4): %d\n  ", intimacy_level);
+		printf("ì§‘ì‚¬ì™€ì˜ ê´€ê³„(0~4): %d\n  ", intimacy_level);
 		switch (intimacy_level) {
 		case 0:
-			printf("°ç¿¡ ¿À´Â °ÍÁ¶Â÷ ½È¾îÇÕ´Ï´Ù.\n"); break;
+			printf("ê³ì— ì˜¤ëŠ” ê²ƒì¡°ì°¨ ì‹«ì–´í•©ë‹ˆë‹¤.\n"); break;
 		case 1:
-			printf("°£½Ä ÀÚÆÇ±â Ãë±ŞÀÔ´Ï´Ù.\n"); break;
+			printf("ê°„ì‹ ìíŒê¸° ì·¨ê¸‰ì…ë‹ˆë‹¤.\n"); break;
 		case 2:
-			printf("±×·°Àú·° ¾µ ¸¸ÇÑ Áı»çÀÔ´Ï´Ù.\n"); break;
+			printf("ê·¸ëŸ­ì €ëŸ­ ì“¸ ë§Œí•œ ì§‘ì‚¬ì…ë‹ˆë‹¤.\n"); break;
 		case 3:
-			printf("ÈÇ¸¢ÇÑ Áı»ç·Î ÀÎÁ¤ ¹Ş°í ÀÖ½À´Ï´Ù.\n"); break;
+			printf("í›Œë¥­í•œ ì§‘ì‚¬ë¡œ ì¸ì • ë°›ê³  ìˆìŠµë‹ˆë‹¤.\n"); break;
 		case 4:
-			printf("Áı»ç ²­µüÁöÀÔ´Ï´Ù.\n"); break;
+			printf("ì§‘ì‚¬ ê»Œë”±ì§€ì…ë‹ˆë‹¤.\n"); break;
 		}
-		printf("==================================================\n\n");//»óÅÂ
+		printf("==================================================\n\n");//ìƒíƒœ
 
 		Sleep(500);
 
-		printf("6-%d: ÁÖ»çÀ§ ´«ÀÌ %dÀÌÇÏÀÌ¸é ±×³É ±âºĞÀÌ ³ªºüÁı´Ï´Ù.\n", intimacy_level, 6 - intimacy_level);
+		printf("6-%d: ì£¼ì‚¬ìœ„ ëˆˆì´ %dì´í•˜ì´ë©´ ê·¸ëƒ¥ ê¸°ë¶„ì´ ë‚˜ë¹ ì§‘ë‹ˆë‹¤.\n", intimacy_level, 6 - intimacy_level);
 		dice = rollDice();
 		if (dice < 6 - intimacy_level) {
-			printf("%sÀÇ ±âºĞÀÌ ³ªºüÁı´Ï´Ù.: %d->", cat, cat_mood);
-			if (cat_mood != 0) {
-				cat_mood -= 1;
-				printf("%d\n", cat_mood);
-			}
-			else {
-				printf("%d\n", cat_mood);
-			}
+			moodminus1(cat_mood, cat);
 		}
-		//±âºĞ ³ªºüÁü
+		//ê¸°ë¶„ ë‚˜ë¹ ì§
 		Sleep(500);
 
 		switch (cat_mood) {
 		case 0:
-			printf("±âºĞÀÌ ¸Å¿ì ³ª»Û %sÀº(´Â) ÁıÀ¸·Î ÇâÇÕ´Ï´Ù.", cat);
+			printf("ê¸°ë¶„ì´ ë§¤ìš° ë‚˜ìœ %sì€(ëŠ”) ì§‘ìœ¼ë¡œ í–¥í•©ë‹ˆë‹¤.", cat);
 			if (catpos > 1) {
 				catpos--;
-			}
+			}break;
 		case 1:
-			printf("%sÀº(´Â) ½É½ÉÇØ¼­ ½ºÅ©·¡Ã³ ÂÊÀ¸·Î ÀÌµ¿ÇÕ´Ï´Ù.", cat);
+			printf("%sì€(ëŠ”) ì‹¬ì‹¬í•´ì„œ ìŠ¤í¬ë˜ì²˜ ìª½ìœ¼ë¡œ ì´ë™í•©ë‹ˆë‹¤.", cat); break;
 		case 2:
-			printf("%sÀº(´Â) ±âºĞ ÁÁ°Ô ½Ä»§À» ±Á°í ÀÖ½À´Ï´Ù.", cat);
+			printf("%sì€(ëŠ”) ê¸°ë¶„ ì¢‹ê²Œ ì‹ë¹µì„ êµ½ê³  ìˆìŠµë‹ˆë‹¤.", cat); break;
 		case 3:
-			printf("%sÀº(´Â) °ñ°ñ¼ÛÀ» ºÎ¸£¸ç ¼öÇÁ¸¦ ¸¸µé·¯ °©´Ï´Ù.", cat);
+			printf("%sì€(ëŠ”) ê³¨ê³¨ì†¡ì„ ë¶€ë¥´ë©° ìˆ˜í”„ë¥¼ ë§Œë“¤ëŸ¬ ê°‘ë‹ˆë‹¤.", cat);
 			if (catpos < 13) {
 				catpos++;
+			}break;
+		}
+		//ê³ ì–‘ì´ ì´ë™
+
+		if (before == 1 && catpos == 1) {
+			moodplus1(cat_mood, cat);
+		}
+		else if (catpos == 13) {
+			switch (rand() % 3) {
+			case 0:
+				soup_quantity++;
+				printf("%sì´(ê°€) ê°ì ìˆ˜í”„ë¥¼ ë§Œë“¤ì—ˆìŠµë‹ˆë‹¤!\ní˜„ì¬ê¹Œì§€ ë§Œë“  ìˆ˜í”„: %d\n", cat, soup_quantity); break;
+			case 1:
+				soup_quantity++;
+				printf("%sì´(ê°€) ì–‘ì†¡ì´ ìˆ˜í”„ë¥¼ ë§Œë“¤ì—ˆìŠµë‹ˆë‹¤!\ní˜„ì¬ê¹Œì§€ ë§Œë“  ìˆ˜í”„: %n", cat, soup_quantity); break;
+			case 2:
+				soup_quantity++;
+				printf("%sì´(ê°€) ë¸Œë¡œì½œë¦¬ ìˆ˜í”„ë¥¼ ë§Œë“¤ì—ˆìŠµë‹ˆë‹¤.\ní˜„ì¬ê¹Œì§€ ë§Œë“  ìˆ˜í”„: %d\n", cat, soup_quantity); break;
 			}
 		}
-		//°í¾çÀÌ ÀÌµ¿
-
-		
-		//°í¾çÀÌ Çàµ¿ 
+		else if (catpos == scratcherpos) {
+			printf("%sì€(ëŠ”) ìŠ¤í¬ë˜ì²˜ë¥¼ ê¸ê³  ë†€ì•˜ìŠµë‹ˆë‹¤.\n");
+			moodplus1(cat_mood, cat);
+		}
+		else if (catpos == cat_towerpos) {
+			printf("%sì€(ëŠ”) ìº£íƒ€ì›Œë¥¼ ë›°ì–´ë‹¤ë‹™ë‹ˆë‹¤.\n");
+			moodplus2(cat_mood, cat);
+		}
+		//ê³ ì–‘ì´ í–‰ë™ 
 
 		Sleep(500);
 
-		drawRoom(catpos);
-		// ¹æ ±×¸®±â
+		drawRoom(catpos, before);
+		// ë°© ê·¸ë¦¬ê¸°
 
 		Sleep(500);
 
-		printf("¾î¶² »óÈ£ÀÛ¿ëÀ» ÇÏ½Ã°Ú½À´Ï±î?   0. ¾Æ¹«°Íµµ ÇÏÁö ¾ÊÀ½  1. ±Ü¾î ÁÖ±â\n");
+		printf("ì–´ë–¤ ìƒí˜¸ì‘ìš©ì„ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?   0. ì•„ë¬´ê²ƒë„ í•˜ì§€ ì•ŠìŒ  1. ê¸ì–´ ì£¼ê¸°\n");
 		while (1) {
 			printf(">> ");
 			scanf_s("%d", &pat);
@@ -139,7 +195,7 @@ int main(void)
 		}
 		switch (pat) {
 		case 0:
-			printf("¾Æ¹«°Íµµ ÇÏÁö ¾Ê¾Ò½À´Ï´Ù.\n4/6ÀÇ È®·ü·Î Ä£¹Ğµµ°¡ ¶³¾îÁı´Ï´Ù.\n");
+			printf("ì•„ë¬´ê²ƒë„ í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.\n4/6ì˜ í™•ë¥ ë¡œ ì¹œë°€ë„ê°€ ë–¨ì–´ì§‘ë‹ˆë‹¤.\n");
 			dice = rollDice();
 			switch (dice) {
 			case 1:
@@ -149,41 +205,41 @@ int main(void)
 				if (intimacy_level > 0) {
 					intimacy_level -= 1;
 				}
-				printf("Ä£¹Ğµµ°¡ ¶³¾îÁı´Ï´Ù.\nÇöÀç Ä£¹Ğµµ: %d\n", intimacy_level);
+				printf("ì¹œë°€ë„ê°€ ë–¨ì–´ì§‘ë‹ˆë‹¤.\ní˜„ì¬ ì¹œë°€ë„: %d\n", intimacy_level);
 				break;
 			case 5:
 			case 6:
-				printf("´ÙÇàÈ÷ Ä£¹Ğµµ°¡ ¶³¾îÁöÁö ¾Ê¾Ò½À´Ï´Ù.\nÇöÀç Ä£¹Ğµµ: %d\n", intimacy_level);
+				printf("ë‹¤í–‰íˆ ì¹œë°€ë„ê°€ ë–¨ì–´ì§€ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.\ní˜„ì¬ ì¹œë°€ë„: %d\n", intimacy_level);
 				break;
 			}
 			break;
-			//»óÈ£ÀÛ¿ë 0 ´©¸¦¶§
+			//ìƒí˜¸ì‘ìš© 0 ëˆ„ë¥¼ë•Œ
 		case 1:
-			printf("%sÀÇ ÅÎÀ» ±Ü¾îÁÖ¾ú½À´Ï´Ù.\n2/6ÀÇ È®·ü·Î Ä£¹Ğµµ°¡ ³ô¾ÆÁı´Ï´Ù.\n", cat);
+			printf("%sì˜ í„±ì„ ê¸ì–´ì£¼ì—ˆìŠµë‹ˆë‹¤.\n2/6ì˜ í™•ë¥ ë¡œ ì¹œë°€ë„ê°€ ë†’ì•„ì§‘ë‹ˆë‹¤.\n", cat);
 			dice = rollDice();
 			switch (dice) {
 			case 1:
 			case 2:
 			case 3:
 			case 4:
-				printf("Ä£¹Ğµµ´Â ±×´ë·ÎÀÔ´Ï´Ù.\nÇöÀç Ä£¹Ğµµ: %d\n", intimacy_level);
+				printf("ì¹œë°€ë„ëŠ” ê·¸ëŒ€ë¡œì…ë‹ˆë‹¤.\ní˜„ì¬ ì¹œë°€ë„: %d\n", intimacy_level);
 				break;
 			case 5:
 			case 6:
 				if (intimacy_level < 4) {
 					intimacy_level += 1;
 				}
-				printf("Ä£¹Ğµµ°¡ ³ô¾ÆÁı´Ï´Ù.\nÇöÀç Ä£¹Ğµµ: %d\n", intimacy_level);
+				printf("ì¹œë°€ë„ê°€ ë†’ì•„ì§‘ë‹ˆë‹¤.\ní˜„ì¬ ì¹œë°€ë„: %d\n", intimacy_level);
 			}
 		}
-		//»óÈ£ÀÛ¿ë 1 ´©¸¦‹š
+		//ìƒí˜¸ì‘ìš© 1 ëˆ„ë¥¼ë–„
 
-		//CP »ı»ê
+		//CP ìƒì‚°
 
-		//»óÁ¡ ±¸¸Å
+		//ìƒì  êµ¬ë§¤
 
 		Sleep(2500);
-		system("cls");//Áö¿ì°í »óÅÂºÎÅÍ ´Ù½Ã
+		system("cls");//ì§€ìš°ê³  ìƒíƒœë¶€í„° ë‹¤ì‹œ
 	}
 	return 0;
 }
