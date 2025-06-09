@@ -3,15 +3,17 @@
 #include<time.h>
 #include<Windows.h>
 
+//상태출력?*기분나빠짐-이동& 행동?방그리기?상호작용및결과?*CP 생산?*상점구매
+
 void drawRoom(int);
 int rollDice(void);
 
 void drawRoom(int catpos) {
-	printf("######\n");
-	printf("#H  B#\n");
+	printf("###############\n");
+	printf("#H           B#\n");
 	printf("#");
 
-	for (int i = 1; i <= 4; i++) {
+	for (int i = 1; i <= 13; i++) {
 		if (i == catpos) {
 			printf("C"); // 고양이 위치 출력
 		}
@@ -21,7 +23,7 @@ void drawRoom(int catpos) {
 	}
 
 	printf("#\n");
-	printf("######\n\n");
+	printf("###############\n\n");
 }//방 그리기
 
 int rollDice() {
@@ -111,21 +113,13 @@ int main(void)
 			printf("%s은(는) 기분 좋게 식빵을 굽고 있습니다.", cat);
 		case 3:
 			printf("%s은(는) 골골송을 부르며 수프를 만들러 갑니다.", cat);
+			if (catpos < 4) {
+				catpos++;
+			}
 		}
 		//고양이 이동
 
-		if (catpos == 4) {
-			switch (rand() % 3 + 1) {
-			case 1:printf("%s이(가) 감자 수프를 만들었습니다!\n", cat); break;
-			case 2:printf("%s이(가) 양송이 수프를 만들었습니다!\n", cat); break;
-			case 3:printf("%s이(가) 브로콜리 수프를 만들었습니다!\n", cat); break;
-			}
-			soup_quantity++;
-			printf("현재까지 만든 수프: %d개\n\n", soup_quantity);
-		}
-		else if (catpos == 1) {
-			printf("%s은(는) 자신의 집에서 편안함을 느낍니다.\n\n", cat);
-		}
+		
 		//고양이 행동 
 
 		Sleep(500);
