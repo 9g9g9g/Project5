@@ -284,11 +284,20 @@ int main(void)
 				moodplus2(cat_mood);
 			}break;
 		}
-		//상호작용 1 누를떄
+		//상호작용
 		Sleep(500);
 
-
-
+		if (cat_mood - 1 + intimacy_level > 0) {
+			CP += cat_mood - 1 + intimacy_level;
+		}
+		printf("%s의 기분(0~3): %d\n집사와의 친밀도(0~4): %d\n%s의 기분과 친밀도에 따라서 CP가 ", cat, cat_mood, intimacy_level);
+		if (cat_mood - 1 + intimacy_level >= 0) {
+			printf("%d", cat_mood - 1 + intimacy_level);
+		}
+		else {
+			printf("%d", 0);
+		}
+		printf("포인트 생산되었습니다.");
 		//CP 생산
 
 		//상점 구매
