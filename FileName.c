@@ -3,11 +3,34 @@
 #include<time.h>
 #include<Windows.h>
 
+void drawRoom(int);
+
+void drawRoom(int catpos) {
+	printf("######\n");
+	printf("#H  B#\n");
+	printf("#");
+
+	for (int i = 1; i <= 4; i++) {
+		if (i == catpos) {
+			printf("C"); // 고양이 위치 출력
+		}
+		else {
+			printf(" "); // 빈 공간 출력
+		}
+	}
+
+	printf("#\n");
+	printf("######\n\n");
+}
+
+
+
+
 
 int main(void)
 {
 
-	int soup_quantity = 0, intimacy_level = 2, pat, dice, catpos = 1, before = 1;//soup_quantity:수프의 개수, intimacy_level:집사와의 관계, pat:0 or 1, dice:주사위 눈 catpos:고양이 위치, before:고양이 전 위치
+	int soup_quantity = 0, intimacy_level = 2, pat, dice, catpos = 1;//soup_quantity:수프의 개수, intimacy_level:집사와의 관계, pat:0 or 1, dice:주사위 눈 catpos:고양이 위치
 	char cat[100];//고양이 이름
 	srand((unsigned int)time(NULL));
 	printf("****야옹이와 수프****\n\n");
@@ -57,6 +80,7 @@ int main(void)
 			}
 		}
 		//고양이 이동
+
 		if (catpos == 4) {
 			switch (rand() % 3 + 1) {
 			case 1:printf("%s이(가) 감자 수프를 만들었습니다!\n", cat); break;
@@ -70,33 +94,12 @@ int main(void)
 			printf("%s은(는) 자신의 집에서 편안함을 느낍니다.\n\n", cat);
 		}
 		//고양이 행동 
+
 		Sleep(500);
 
-		printf("######\n#H  B#\n");
-		if (catpos > before) {
-			switch (catpos) {
-			case 2: printf("#.C  #\n"); before++; break;
-			case 3: printf("# .C #\n"); before++; break;
-			case 4: printf("#  .C#\n"); before++; break;
-			}
-		}
-		else if (catpos < before) {
-			switch (catpos) {
-			case 1: printf("#C.  #\n"); before--; break;
-			case 2: printf("# C. #\n"); before--; break;
-			case 3: printf("#  C.#\n"); before--; break;
-			}
-		}
-		else if (catpos == before) {
-			switch (catpos) {
-			case 1: printf("#C   #\n"); break;
-			case 4: printf("#   C#\n"); break;
-			}
-		}
-
-
-		printf("######\n\n");
+		drawRoom(catpos);
 		// 뱡만들기
+
 		Sleep(500);
 
 		printf("어떤 상호작용을 하시겠습니까?   0. 아무것도 하지 않음  1. 긁어 주기\n");
