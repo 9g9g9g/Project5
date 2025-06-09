@@ -7,7 +7,7 @@
 int main(void)
 {
 
-	int soup = 0, com = 2, a, dice, catpos = 1, before = 1, b;//soup:수프의 개수, com:집사와의 관계, a:0 or 1, dice:주사위 눈 catpos:고양이 위치, before:고양이 전 위치, 수프 종류
+	int soup_quantity = 0, intimacy_level = 2, pat, dice, catpos = 1, before = 1;//soup_quantity:수프의 개수, intimacy_level:집사와의 관계, pat:0 or 1, dice:주사위 눈 catpos:고양이 위치, before:고양이 전 위치
 	char cat[100];//고양이 이름
 	srand((unsigned int)time(NULL));
 	printf("****야옹이와 수프****\n\n");
@@ -22,9 +22,9 @@ int main(void)
 
 	while (1) {
 		printf("==================== 현재상태 ====================\n");
-		printf("현재까지 만든 수프: %d개\n", soup);
-		printf("집사와의 관계(0~4): %d\n  ", com);
-		switch (com) {
+		printf("현재까지 만든 수프: %d개\n", soup_quantity);
+		printf("집사와의 관계(0~4): %d\n  ", intimacy_level);
+		switch (intimacy_level) {
 		case 0:
 			printf("곁에 오는 것조차 싫어합니다.\n"); break;
 		case 1:
@@ -40,17 +40,17 @@ int main(void)
 
 		Sleep(500);
 
-		printf("%s 이동: 집사와 친밀할수록 냄비 쪽으로 갈 확률이 높아집니다.\n주사위 눈이 %d 이상이면 냄비 쪽으로 이동합니다.\n", cat, 6 - com);
+		printf("%s 이동: 집사와 친밀할수록 냄비 쪽으로 갈 확률이 높아집니다.\n주사위 눈이 %d 이상이면 냄비 쪽으로 이동합니다.\n", cat, 6 - intimacy_level);
 		dice = rand() % 6 + 1;
 		printf("주사위를 굴립니다. 또르륵...\n");
 		printf("%d가 나왔습니다!\n", dice);
-		if (dice >= 6 - com) {
+		if (dice >= 6 - intimacy_level) {
 			printf("냄비 쪽으로 이동합니다.\n\n");
 			if (catpos != 4) {
 				catpos++;
 			}
 		}
-		else if (dice < 6 - com) {
+		else if (dice < 6 - intimacy_level) {
 			printf("집 쪽으로 이동합니다.\n\n");
 			if (catpos > 1) {
 				catpos--;
@@ -58,14 +58,13 @@ int main(void)
 		}
 		//고양이 이동
 		if (catpos == 4) {
-			b = rand() % 3 + 1;
-			switch (b) {
+			switch (rand() % 3 + 1) {
 			case 1:printf("%s이(가) 감자 수프를 만들었습니다!\n", cat); break;
 			case 2:printf("%s이(가) 양송이 수프를 만들었습니다!\n", cat); break;
 			case 3:printf("%s이(가) 브로콜리 수프를 만들었습니다!\n", cat); break;
 			}
-			soup++;
-			printf("현재까지 만든 수프: %d개\n\n", soup);
+			soup_quantity++;
+			printf("현재까지 만든 수프: %d개\n\n", soup_quantity);
 		}
 		else if (catpos == 1) {
 			printf("%s은(는) 자신의 집에서 편안함을 느낍니다.\n\n", cat);
@@ -103,12 +102,12 @@ int main(void)
 		printf("어떤 상호작용을 하시겠습니까?   0. 아무것도 하지 않음  1. 긁어 주기\n");
 		while (1) {
 			printf(">> ");
-			scanf_s("%d", &a);
-			if (a == 0 || a == 1) {
+			scanf_s("%d", &pat);
+			if (pat == 0 || pat == 1) {
 				break;
 			}
 		}
-		switch (a) {
+		switch (pat) {
 		case 0:
 			printf("아무것도 하지 않았습니다.\n4/6의 확률로 친밀도가 떨어집니다.\n주사위를 굴립니다. 또르륵...\n");
 			dice = rand() % 6 + 1;
@@ -118,14 +117,14 @@ int main(void)
 			case 2:
 			case 3:
 			case 4:
-				if (com > 0) {
-					com -= 1;
+				if (intimacy_level > 0) {
+					intimacy_level -= 1;
 				}
-				printf("친밀도가 떨어집니다.\n현재 친밀도: %d\n", com);
+				printf("친밀도가 떨어집니다.\n현재 친밀도: %d\n", intimacy_level);
 				break;
 			case 5:
 			case 6:
-				printf("다행히 친밀도가 떨어지지 않았습니다.\n현재 친밀도: %d\n", com);
+				printf("다행히 친밀도가 떨어지지 않았습니다.\n현재 친밀도: %d\n", intimacy_level);
 				break;
 			}
 			break;
@@ -139,14 +138,14 @@ int main(void)
 			case 2:
 			case 3:
 			case 4:
-				printf("친밀도는 그대로입니다.\n현재 친밀도: %d\n", com);
+				printf("친밀도는 그대로입니다.\n현재 친밀도: %d\n", intimacy_level);
 				break;
 			case 5:
 			case 6:
-				if (com < 4) {
-					com += 1;
+				if (intimacy_level < 4) {
+					intimacy_level += 1;
 				}
-				printf("친밀도가 높아집니다.\n현재 친밀도: %d\n", com);
+				printf("친밀도가 높아집니다.\n현재 친밀도: %d\n", intimacy_level);
 			}
 		}
 		//상호작용 1 누를떄
@@ -156,5 +155,3 @@ int main(void)
 	}
 	return 0;
 }
-
-
