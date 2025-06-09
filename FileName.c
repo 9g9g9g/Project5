@@ -47,6 +47,19 @@ int main(void)
 	while (1) {
 		printf("==================== 현재상태 ====================\n");
 		printf("현재까지 만든 수프: %d개\n", soup_quantity);
+		printf("CP: %d 포인트\n", CP);
+		printf("%s 기분(0~3): %d\n  ", cat, cat_mood);
+		switch (cat_mood) {
+		case 0:
+			printf("기분이 매우 나쁩니다.\n");
+		case 1:
+			printf("심심해 합니다\n");
+		case 2: 
+			printf("식빵을 굽습니다.\n");
+		case 3:
+			printf("골골송을 부릅니다.\n");
+		}
+
 		printf("집사와의 관계(0~4): %d\n  ", intimacy_level);
 		switch (intimacy_level) {
 		case 0:
@@ -63,6 +76,8 @@ int main(void)
 		printf("==================================================\n\n");//상태
 
 		Sleep(500);
+
+		
 
 		//기분 나빠짐
 
