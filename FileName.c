@@ -206,12 +206,30 @@ int main(void)
 		while (1) {
 			printf(">> ");
 			scanf_s("%d", &user_choice);
-			if (user_choice>=0&&user_choice<=3) {
+			if (rat == 0 && razer == 0) {
+				if (user_choice >= 0 && user_choice <= 1) {
+					break;
+				}
+			}
+			else if(rat == 1 && razer ==1) {
+				if (user_choice >= 0 && user_choice <= 3) {
+					break;
+				}
+			}
+		else if (razer == 1) {
+			if (user_choice >= 0 && user_choice <= 2) {
 				break;
+			}
+		}
+		else if (rat == 1) {
+			if (user_choice >= 0 && user_choice <= 2) {
+				break;
+			}
 			}
 		}
 		switch (user_choice) {
 		case 0:
+			moodminus1(cat_mood);
 			printf("아무것도 하지 않았습니다.\n4/6의 확률로 친밀도가 떨어집니다.\n");
 			dice = rollDice();
 			switch (dice) {
@@ -232,6 +250,7 @@ int main(void)
 			break;
 			//상호작용 0 누를때
 		case 1:
+			printf("%s의 기분이 그대로 입니다: %d", cat, cat_mood);
 			printf("%s의 턱을 긁어주었습니다.\n2/6의 확률로 친밀도가 높아집니다.\n", cat);
 			dice = rollDice();
 			switch (dice) {
@@ -248,6 +267,22 @@ int main(void)
 				}
 				printf("친밀도가 높아집니다.\n현재 친밀도: %d\n", intimacy_level);
 			}
+		case 2:
+			if (rat == 0 && razer == 0) {
+			}
+			else if (rat == 1) {
+				printf("장난감 쥐로 %s와 놀아 주었습니다.", cat);
+				moodplus1(cat_mood);
+			}
+			else if (razer == 1) {
+				printf("레이저 포이터로 %s와 신나게 놀아 주었습니다,", cat);
+				moodplus2(cat_mood);
+			}break;
+		case 3:
+			if (rat == 1 && razer == 1) {
+				printf("레이저 포이터로 %s와 신나게 놀아 주었습니다,", cat);
+				moodplus2(cat_mood);
+			}break;
 		}
 		//상호작용 1 누를떄
 		Sleep(500);
