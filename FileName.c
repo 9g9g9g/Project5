@@ -30,7 +30,7 @@ int rollDice() {
 	printf("주사위를 굴립니다. 또르륵...\n");
 	printf("%d가 나왔습니다!\n", dice);
 	return dice;
-}
+}//주사위 굴리기
 
 
 
@@ -90,28 +90,27 @@ int main(void)
 			printf("%s의 기분이 나빠집니다.: %d->", cat, cat_mood);
 			if (cat_mood != 0) {
 				cat_mood -= 1;
-				printf("%d", cat_mood);
+				printf("%d\n", cat_mood);
 			}
 			else {
-				printf("%d", cat_mood);
+				printf("%d\n", cat_mood);
 			}
 		}
 		//기분 나빠짐
 		Sleep(500);
 
-		printf("%s 이동: 집사와 친밀할수록 냄비 쪽으로 갈 확률이 높아집니다.\n주사위 눈이 %d 이상이면 냄비 쪽으로 이동합니다.\n", cat, 6 - intimacy_level);
-		dice = rollDice();
-		if (dice >= 6 - intimacy_level) {
-			printf("냄비 쪽으로 이동합니다.\n\n");
-			if (catpos != 4) {
-				catpos++;
-			}
-		}
-		else if (dice < 6 - intimacy_level) {
-			printf("집 쪽으로 이동합니다.\n\n");
+		switch (cat_mood) {
+		case 0:
+			printf("기분이 매우 나쁜 %s은(는) 집으로 향합니다.", cat);
 			if (catpos > 1) {
 				catpos--;
 			}
+		case 1:
+			printf("%s은(는) 심심해서 스크래처 쪽으로 이동합니다.", cat);
+		case 2:
+			printf("%s은(는) 기분 좋게 식빵을 굽고 있습니다.", cat);
+		case 3:
+			printf("%s은(는) 골골송을 부르며 수프를 만들러 갑니다.", cat);
 		}
 		//고양이 이동
 
