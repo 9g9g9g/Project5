@@ -3,16 +3,18 @@
 #include<time.h>
 #include<Windows.h>
 
+char cat[100];//고양이 이름
+
 //상태출력–*기분나빠짐-이동& 행동–방그리기–상호작용및결과–*CP 생산–*상점구매
 
 void drawRoom(int, int);
 int rollDice(void);
-int moodplus1(int, char);
-int moodplus2(int, char);
-int moodminus1(int, char);
+int moodplus1(int);
+int moodplus2(int);
+int moodminus1(int);
 
 void drawRoom(int catpos, int before) {
-	printf("###############\n");
+	printf("\n###############\n");
 	printf("#H           B#\n");
 	printf("#");
 
@@ -40,17 +42,18 @@ int rollDice() {
 	return dice;
 }//주사위 굴리기
 
-int moodplus1(int cat_mood, char cat) {
+int moodplus1(int cat_mood) {
 	
 	printf("%s의 기분이 조금 좋아졌습니다:%d->", cat, cat_mood);
 	if (cat_mood < 3) {
 		cat_mood++;
 	}
 	printf("%d\n", cat_mood);
+	return cat_mood;
 }//기분 +1
 
 
-int moodplus2(int cat_mood, char cat) {
+int moodplus2(int cat_mood) {
 
 	printf("%s의 기분이 제법 좋아졌습니다:%d->", cat, cat_mood);
 	if (cat_mood < 2) {
@@ -60,14 +63,16 @@ int moodplus2(int cat_mood, char cat) {
 		cat_mood++;
 	}
 	printf("%d\n", cat_mood);
+	return cat_mood;
 }//기분 +2
 
-int moodminus1(int cat_mood, char cat) {
+int moodminus1(int cat_mood) {
 	printf("%s의 기분이 나빠집니다.: %d->", cat, cat_mood);
 	if (cat_mood != 0) {
 		cat_mood -= 1;	
 	}
 	printf("%d\n", cat_mood);
+	return cat_mood;
 }
 
 
@@ -79,9 +84,9 @@ int moodminus1(int cat_mood, char cat) {
 int main(void)
 {
 
-	int soup_quantity = 0, intimacy_level = 2, pat, dice, catpos = 1, before;//soup_quantity:수프의 개수, intimacy_level:집사와의 관계, pat:쓰다듬기 0 or 1, dice:주사위 눈, catpos:고양이 위치, before: 고양이 전 위치
+	int soup_quantity = 0, intimacy_level = 2, user_choice, dice, catpos = 1, before=0;//soup_quantity:수프의 개수, intimacy_level:집사와의 관계, user_choice:상호작용, dice:주사위 눈, catpos:고양이 위치, before: 고양이 전 위치
 	int CP = 0, cat_mood = 3, scratcherpos = 0, cat_towerpos = 0; //CP:상점 자원, cat_mood:고양이 기분, scratcherpos:스크래쳐 유무와 위치, cat_towerpos:캣타워 유무와 위치
-	char cat[100];//고양이 이름
+	int rat = 0, razer = 0;//rat:장남감 쥐 유무, rezer:레이저 포인트 유무
 	srand((unsigned int)time(NULL));
 	printf("****야옹이와 수프****\n\n");
 	printf("      /\\_/\\\n /\\  / ° ° \\\n//\\\\ \\~(*)~/\n`  \\/   ^ /\n   | \\|| ||\n   \\ '|| ||\n    \\)()-())\n\n");
@@ -129,7 +134,7 @@ int main(void)
 		printf("6-%d: 주사위 눈이 %d이하이면 그냥 기분이 나빠집니다.\n", intimacy_level, 6 - intimacy_level);
 		dice = rollDice();
 		if (dice < 6 - intimacy_level) {
-			moodminus1(cat_mood, cat);
+			moodminus1(cat_mood);
 		}
 		//기분 나빠짐
 		Sleep(500);
@@ -153,7 +158,7 @@ int main(void)
 		//고양이 이동
 
 		if (before == 1 && catpos == 1) {
-			moodplus1(cat_mood, cat);
+			moodplus1(cat_mood);
 		}
 		else if (catpos == 13) {
 			switch (rand() % 3) {
@@ -162,19 +167,19 @@ int main(void)
 				printf("%s이(가) 감자 수프를 만들었습니다!\n현재까지 만든 수프: %d\n", cat, soup_quantity); break;
 			case 1:
 				soup_quantity++;
-				printf("%s이(가) 양송이 수프를 만들었습니다!\n현재까지 만든 수프: %n", cat, soup_quantity); break;
+				printf("%s이(가) 양송이 수프를 만들었습니다!\n현재까지 만든 수프: %d", cat, soup_quantity); break;
 			case 2:
 				soup_quantity++;
 				printf("%s이(가) 브로콜리 수프를 만들었습니다.\n현재까지 만든 수프: %d\n", cat, soup_quantity); break;
 			}
 		}
 		else if (catpos == scratcherpos) {
-			printf("%s은(는) 스크래처를 긁고 놀았습니다.\n");
-			moodplus1(cat_mood, cat);
+			printf("%s은(는) 스크래처를 긁고 놀았습니다.\n", cat);
+			moodplus1(cat_mood);
 		}
 		else if (catpos == cat_towerpos) {
-			printf("%s은(는) 캣타워를 뛰어다닙니다.\n");
-			moodplus2(cat_mood, cat);
+			printf("%s은(는) 캣타워를 뛰어다닙니다.\n", cat);
+			moodplus2(cat_mood);
 		}
 		//고양이 행동 
 
@@ -185,15 +190,27 @@ int main(void)
 
 		Sleep(500);
 
-		printf("어떤 상호작용을 하시겠습니까?   0. 아무것도 하지 않음  1. 긁어 주기\n");
+		if (rat == 0 && razer == 0) {
+			printf("어떤 상호작용을 하시겠습니까?\n  0. 아무것도 하지 않음\n  1. 긁어 주기\n");
+		}
+		else if (rat == 1 && razer == 1) {
+			printf("어떤 상호작용을 하시겠습니까?\n  0. 아무것도 하지 않음\n  1. 긁어 주기\n  2. 장난감 쥐로 놀아주기\n  3. 레이저 포인터로 놀아주기 \n");
+		}
+		else if (rat == 1) {
+			printf("어떤 상호작용을 하시겠습니까?\n  0. 아무것도 하지 않음\n  1. 긁어 주기\n  2. 장난감 쥐로 놀아주기\n");
+		}
+		else if(razer == 1) {
+			printf("어떤 상호작용을 하시겠습니까?\n  0. 아무것도 하지 않음\n  1. 긁어 주기\n  2. 레이저 포인터로 놀아주기\n");
+		}
+		
 		while (1) {
 			printf(">> ");
-			scanf_s("%d", &pat);
-			if (pat == 0 || pat == 1) {
+			scanf_s("%d", &user_choice);
+			if (user_choice>=0&&user_choice<=3) {
 				break;
 			}
 		}
-		switch (pat) {
+		switch (user_choice) {
 		case 0:
 			printf("아무것도 하지 않았습니다.\n4/6의 확률로 친밀도가 떨어집니다.\n");
 			dice = rollDice();
@@ -233,6 +250,9 @@ int main(void)
 			}
 		}
 		//상호작용 1 누를떄
+		Sleep(500);
+
+
 
 		//CP 생산
 
