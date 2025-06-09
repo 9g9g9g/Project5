@@ -4,6 +4,7 @@
 #include<Windows.h>
 
 void drawRoom(int);
+int rollDice(void);
 
 void drawRoom(int catpos) {
 	printf("######\n");
@@ -23,14 +24,20 @@ void drawRoom(int catpos) {
 	printf("######\n\n");
 }//방 그리기
 
-
+int rollDice() {
+	int dice; 
+	dice = rand() % 6 + 1;
+	printf("주사위를 굴립니다. 또르륵...\n");
+	printf("%d가 나왔습니다!\n", dice);
+	return dice;
+}
 
 
 
 int main(void)
 {
 
-	int soup_quantity = 0, intimacy_level = 2, pat, dice, catpos = 1;//soup_quantity:수프의 개수, intimacy_level:집사와의 관계, pat:쓰다듬기 0 or 1, dice:주사위 눈 catpos:고양이 위치
+	int soup_quantity = 0, intimacy_level = 2, pat, dice, catpos = 1;//soup_quantity:수프의 개수, intimacy_level:집사와의 관계, pat:쓰다듬기 0 or 1, dice:주사위 눈, catpos:고양이 위치
 	int CP = 0, cat_mood = 3; //CP:상점 자원, cat_mood:고양이 기분
 	char cat[100];//고양이 이름
 	srand((unsigned int)time(NULL));
@@ -82,9 +89,7 @@ int main(void)
 		//기분 나빠짐
 
 		printf("%s 이동: 집사와 친밀할수록 냄비 쪽으로 갈 확률이 높아집니다.\n주사위 눈이 %d 이상이면 냄비 쪽으로 이동합니다.\n", cat, 6 - intimacy_level);
-		dice = rand() % 6 + 1;
-		printf("주사위를 굴립니다. 또르륵...\n");
-		printf("%d가 나왔습니다!\n", dice);
+		dice = rollDice();
 		if (dice >= 6 - intimacy_level) {
 			printf("냄비 쪽으로 이동합니다.\n\n");
 			if (catpos != 4) {
@@ -130,9 +135,8 @@ int main(void)
 		}
 		switch (pat) {
 		case 0:
-			printf("아무것도 하지 않았습니다.\n4/6의 확률로 친밀도가 떨어집니다.\n주사위를 굴립니다. 또르륵...\n");
-			dice = rand() % 6 + 1;
-			printf("%d이(가) 나왔습니다!\n", dice);
+			printf("아무것도 하지 않았습니다.\n4/6의 확률로 친밀도가 떨어집니다.\n");
+			dice = rollDice();
 			switch (dice) {
 			case 1:
 			case 2:
@@ -151,9 +155,8 @@ int main(void)
 			break;
 			//상호작용 0 누를때
 		case 1:
-			printf("%s의 턱을 긁어주었습니다.\n2/6의 확률로 친밀도가 높아집니다.\n주사위를 굴립니다. 또르륵...\n", cat);
-			dice = rand() % 6 + 1;
-			printf("%d이(가) 나왔습니다.\n", dice);
+			printf("%s의 턱을 긁어주었습니다.\n2/6의 확률로 친밀도가 높아집니다.\n", cat);
+			dice = rollDice();
 			switch (dice) {
 			case 1:
 			case 2:
