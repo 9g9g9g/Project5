@@ -132,42 +132,42 @@ int move(int catpos, int scratcherpos, int cat_towerpos, int cat_mood) {
 		if (A < B) {
 			if (a > 0) {
 				catpos--;
-				printf("%s은(는) 심심해서 스크래처 쪽으로 이동합니다.");
+				printf("%s은(는) 심심해서 스크래처 쪽으로 이동합니다.", cat);
 			}
 			else if (a < 0) {
 				catpos++;
-				printf("%s은(는) 심심해서 스크래처 쪽으로 이동합니다.");
+				printf("%s은(는) 심심해서 스크래처 쪽으로 이동합니다.", cat);
 			}
 		}
 		else {
 			if (b > 0) {
 				catpos--;
-				printf("%s은(는) 심심해서 캣타워 쪽으로 이동합니다.");
+				printf("%s은(는) 심심해서 캣타워 쪽으로 이동합니다.", cat);
 			}
 			else if (b < 0) {
 				catpos++;
-				printf("%s은(는) 심심해서 캣타워 쪽으로 이동합니다.");
+				printf("%s은(는) 심심해서 캣타워 쪽으로 이동합니다.", cat);
 			}
 		}
 	}
 	else if (scratcherpos > 0) {
 		if (a > 0) {
 			catpos--;
-			printf("%s은(는) 심심해서 스크래처 쪽으로 이동합니다.");
+			printf("%s은(는) 심심해서 스크래처 쪽으로 이동합니다.", cat);
 		}
 		else if (a < 0) {
 			catpos++;
-			printf("%s은(는) 심심해서 스크래처 쪽으로 이동합니다.");
+			printf("%s은(는) 심심해서 스크래처 쪽으로 이동합니다.", cat);
 		}
 	}
 	else if (cat_towerpos > 0) {
 		if (b > 0) {
 			catpos--;
-			printf("%s은(는) 심심해서 캣타워 쪽으로 이동합니다.");
+			printf("%s은(는) 심심해서 캣타워 쪽으로 이동합니다.", cat);
 		}
 		else if (b < 0) {
 			catpos++;
-			printf("%s은(는) 심심해서 캣타워 쪽으로 이동합니다.");
+			printf("%s은(는) 심심해서 캣타워 쪽으로 이동합니다.", cat);
 		}
 	}
 	else {
