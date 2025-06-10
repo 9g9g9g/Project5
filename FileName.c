@@ -12,6 +12,9 @@ int rollDice(void);
 int moodplus1(int);
 int moodplus2(int);
 int moodminus1(int);
+int broke(int, int, int, int);
+
+
 
 void drawRoom(int catpos, int before) {
 	printf("\n###############\n");
@@ -73,7 +76,50 @@ int moodminus1(int cat_mood) {
 	}
 	printf("%d\n", cat_mood);
 	return cat_mood;
-}
+}//기분 -1
+
+int broke(int rat, int razer, int scratcherpos, int cat_towerpos) {
+	printf("고양이가 미쳐 날뜁니다.\n일정 확률로 고양이가 물건을 부숩니다.");
+	Sleep(100);
+	int object;
+	if (rand() % 100 < 40) {
+		object = rand() % 4 + 1;
+		switch (object) {
+		case 1:
+			if (rat == 1) {
+				printf("고양이가 장난감 쥐를 높은 곳에서 떨어뜨립니다.."); break;
+			}
+			else {
+				object = 0;
+			}
+		case 2:
+			if (razer == 1) {
+				printf("고양이가 레이저 포인터를 깨뭅니다.."); break;
+			}
+			else {
+				object = 0;
+			}
+		case 3:
+			if (scratcherpos > 0) {
+				printf("고양이가 스크래쳐를 마구 긁어 다 닳았습니다."); break;
+			}
+			else {
+				object = 0;
+			}
+		case 4:
+			if (cat_towerpos > 0) {
+				printf("고양이가 캣타워를 무너뜨립니다."); break;
+			}object = 0;
+		}
+	}
+	else {
+		object = 0;
+	}
+	return object;
+}//파괴신 고양이
+
+
+
 
 
 
@@ -87,6 +133,7 @@ int main(void)
 	int soup_quantity = 0, intimacy_level = 2, user_choice, dice, catpos = 1, before=0;//soup_quantity:수프의 개수, intimacy_level:집사와의 관계, user_choice:상호작용, dice:주사위 눈, catpos:고양이 위치, before: 고양이 전 위치
 	int CP = 0, cat_mood = 3, scratcherpos = 0, cat_towerpos = 0; //CP:상점 자원, cat_mood:고양이 기분, scratcherpos:스크래쳐 유무와 위치, cat_towerpos:캣타워 유무와 위치
 	int rat = 0, razer = 0, store=0;//rat:장남감 쥐 유무, rezer:레이저 포인트 유무, store:상점에서 고른 숫자
+	int count = 1;
 	srand((unsigned int)time(NULL));
 	printf("****야옹이와 수프****\n\n");
 	printf("      /\\_/\\\n /\\  / ° ° \\\n//\\\\ \\~(*)~/\n`  \\/   ^ /\n   | \\|| ||\n   \\ '|| ||\n    \\)()-())\n\n");
@@ -373,7 +420,23 @@ int main(void)
 		}
 		//상점 구매
 
-
+		if (count >= 3) {
+			switch (broke(rat, razer, scratcherpos, cat_towerpos)) {
+			case 0:
+				printf("다행히 어떤 물건도 부서지지 않았습니다."); break;
+			case 1:
+				rat = 0; break;
+			case 2:
+				razer = 0; break;
+			case 3:
+				scratcherpos = 0; break;
+			case 4:
+				cat_towerpos = 0; break;
+			}
+			count = 0;
+		}
+		count++;
+		//돌발 퀘스트
 
 
 		Sleep(2500);
